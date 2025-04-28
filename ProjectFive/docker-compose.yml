@@ -1,0 +1,19 @@
+version: "3.8"
+services:
+  postgres-db:
+    container_name: projectfive
+    image: postgres # use latest official postgres version
+    restart: always
+    environment:
+      POSTGRES_USER: username
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: projectfive
+      POSTGRES_HOST_AUTH_METHOD: password
+    ports:
+      - "5439:5432"
+
+volumes:
+  postgresql_data:
+    driver: local
+
+
