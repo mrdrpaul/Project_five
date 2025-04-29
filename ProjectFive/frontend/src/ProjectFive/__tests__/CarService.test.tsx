@@ -1,6 +1,4 @@
-import {render, screen} from "@testing-library/react";
-import { describe, it, expect, beforeAll, afterAll, afterEach } from "vitest";
-import {CarItem} from "../CarItem";
+import {afterAll, afterEach, beforeAll, describe, expect, it} from "vitest";
 import {Car} from "../../CarType";
 import axios from "axios";
 import {setupServer} from "msw/node";
