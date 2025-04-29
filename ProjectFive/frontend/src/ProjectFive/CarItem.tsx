@@ -1,10 +1,16 @@
-import {useState} from "react";
-import {Car} from "../CarType.ts"
+import {Car} from "../CarType";
 
-export const CarItem = () =>{
-    const car = "ford"
-    const [cars, setCars] = useState<Car>()
+type CarItemProps = {
+    car: Car
+}
+
+export const CarItem = ({car}:CarItemProps) =>{
     return (
-        <div>{car}</div>
+        <>
+            <h1>{car.make} {car.model}</h1>
+            <p>Year: {car.year}</p>
+            <p>Price: ${car.price}</p>
+            <label>Used Vehicle: <input type={"checkbox"} defaultChecked={car.isUsed}/></label>
+        </>
     )
 }
