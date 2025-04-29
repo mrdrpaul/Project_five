@@ -10,7 +10,7 @@ export const CarItem = ({car}:CarItemProps) =>{
             <h1>{car.make} {car.model}</h1>
             <p>Year: {car.year}</p>
             <p>Price: ${car.price}</p>
-            <label>Used Vehicle: <input type={"checkbox"} defaultChecked={car.isUsed}/></label>
+            <label>Used Vehicle: <input disabled type={"checkbox"} defaultChecked={car.used}/></label>
         </>
     )
 }

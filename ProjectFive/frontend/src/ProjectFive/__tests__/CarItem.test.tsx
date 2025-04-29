@@ -11,7 +11,7 @@ describe('Car Item',()=>{
             model:"Mustang",
             year:2017,
             price:20000.95,
-            isUsed:true
+            used:true
         }
 
         render(<CarItem car={testCar}/>)
@@ -26,5 +26,7 @@ describe('Car Item',()=>{
         expect(priceText).toBeVisible()
         expect(isUsedDisplay).toBeVisible()
         expect(isUsedDisplay).toBeChecked()
+        expect(isUsedDisplay).toBeDisabled()
     });
+
 })
