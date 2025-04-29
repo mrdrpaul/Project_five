@@ -1,19 +1,9 @@
 import {Car} from "../CarType.ts";
+import axios, {AxiosResponse} from "axios";
 
-export function fetchCars(): Promise<Car[]>{
-    const mockedCars: Car[] = [
-        {
-            id: 1,
-            make: 'Kia',
-            model: 'Optima',
-            year: 2020,
-            price: 12500,
-            vin: 'QWERTY1234567890Q',
-            miles: 89900,
-            color: 'black',
-            isUsed: true,
-            cleanTitle: true,
-        }
-    ]
-    return Promise.resolve(mockedCars);
-}
+type FetchCars = () => Promise<Car[]>;
+
+export const fetchCars: FetchCars = () => (
+    axios.get('/api/car')
+        .then((r: AxiosResponse<Car[]>) => r.data)
+)
