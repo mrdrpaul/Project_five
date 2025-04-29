@@ -8,9 +8,9 @@ const CarPage = () => {
 
 
     useEffect(() => {
-        fetchCars().then((r)=>(setCarList(r)))
+        fetchCars().then((r)=>{
+            setCarList(r)})
     }, []);
-
 
     return (
         <div>
