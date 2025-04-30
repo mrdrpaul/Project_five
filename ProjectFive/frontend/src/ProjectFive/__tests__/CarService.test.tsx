@@ -16,9 +16,9 @@ describe('Car Service',()=>{
 
     it('should fetch cars', async() => {
         const expected: Car[]= [
-            {id: 1, make: 'Ford', model: 'Mustang', year: 2017, price: 30000.65,isUsed: true},
-            {id: 2, make: 'Kia', model: 'Optima', year: 2020, price: 13500,isUsed: true},
-            {id: 3, make: 'Chevy', model: 'Silverado', year: 2025, price: 60000.34,isUsed: false},
+            {id: 1, make: 'Ford', model: 'Mustang', year: 2017, price: 30000.65,used: true},
+            {id: 2, make: 'Kia', model: 'Optima', year: 2020, price: 13500,used: true},
+            {id: 3, make: 'Chevy', model: 'Silverado', year: 2025, price: 60000.34,used: false},
         ];
         server.use(http.get('/api/car', () =>
             HttpResponse.json(expected, {status: 201})
@@ -29,7 +29,7 @@ describe('Car Service',()=>{
     })
 
     it('should pass car data to database', async () => {
-    const fakeCar: Car = {id: 1, make: 'Ford', model: 'Mustang', year: 2017, price: 30000.65,isUsed: true}
+    const fakeCar: Car = {id: 1, make: 'Ford', model: 'Mustang', year: 2017, price: 30000.65,used: true}
     server.use(http.post('api/car/create', () =>
     HttpResponse.json(fakeCar, {status: 201})
     ))
