@@ -16,4 +16,8 @@ public class CarService {
     public List<CarEntity> findAllCars() {
         return carRepository.findAll();
     }
+
+    public CarEntity SaveCar(CarEntity mockCar) {
+        return carRepository.save(mockCar);
+    }
 }

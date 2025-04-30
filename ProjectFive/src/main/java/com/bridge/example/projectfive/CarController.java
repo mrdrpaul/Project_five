@@ -1,9 +1,8 @@
 package com.bridge.example.projectfive;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -21,5 +20,11 @@ public class CarController {
     @GetMapping
     public ResponseEntity<List<CarEntity>> getCarEntities() {
         return ResponseEntity.ok(carService.findAllCars());
+    }
+
+    @PostMapping("/create")
+    public ResponseEntity<CarEntity> CreateCar (@RequestBody CarEntity newCar){
+        carService.SaveCar(newCar);
+        return ResponseEntity.status(201).body(newCar);
     }
 }

@@ -7,6 +7,7 @@ import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
@@ -43,5 +44,13 @@ public class CarControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.get("/api/car"))
                 .andExpect(status().isOk())
                 .andExpect(jsonPath("$", hasSize(2)));
+    }
+
+    @Test
+    void shouldCreateACar() throws Exception{
+        Mockito.when(carService.SaveCar(carEntity)).thenReturn(carEntity);
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/car/create").contentType(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsString(carEntity))).andExpect(status().isCreated());
+
     }
 }

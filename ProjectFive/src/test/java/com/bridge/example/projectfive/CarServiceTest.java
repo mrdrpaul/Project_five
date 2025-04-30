@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
 import java.util.List;
@@ -38,5 +39,15 @@ public class CarServiceTest {
         List<CarEntity> carListRequest = carService.findAllCars();
         verify(carRepository, times(1)).findAll();
         assertThat(carListRequest).isEqualTo(expectedCars);
+    }
+
+    @Test
+    void shouldCreateNewCar() {
+        CarEntity MockCar = new CarEntity("Ford", "Focus", 2011, 3000.45, true);
+        Mockito.when(carRepository.save(MockCar)).thenReturn(MockCar);
+        CarEntity savedCar = carService.SaveCar(MockCar);
+        verify(carRepository, times(1)).save(any(CarEntity.class));
+        assert(savedCar.equals(MockCar));
+
     }
 }

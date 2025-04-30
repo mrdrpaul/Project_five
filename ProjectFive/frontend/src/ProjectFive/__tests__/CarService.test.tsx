@@ -3,7 +3,7 @@ import {Car} from "../../CarType";
 import axios from "axios";
 import {setupServer} from "msw/node";
 import {http, HttpResponse} from "msw";
-import {fetchCars} from "../CarService";
+import {CreateCar, fetchCars} from "../CarService";
 
 
 describe('Car Service',()=>{
@@ -27,4 +27,16 @@ describe('Car Service',()=>{
         expect(await fetchCars()).toStrictEqual(expected);
 
     })
+
+    it('should pass car data to database', async () => {
+    const fakeCar: Car = {id: 1, make: 'Ford', model: 'Mustang', year: 2017, price: 30000.65,isUsed: true}
+    server.use(http.post('api/car/create', () =>
+    HttpResponse.json(fakeCar, {status: 201})
+    ))
+        expect(await CreateCar(fakeCar)).toStrictEqual(fakeCar);
+       console.log(CreateCar(fakeCar))
+
+
+
+    });
 })
