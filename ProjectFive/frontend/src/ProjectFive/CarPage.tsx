@@ -67,7 +67,7 @@ const submitHandler = (event: FormEvent) => {
                         type="checkbox"
 
                         onChange={handleClick}
-                        checked={newCar.used}
+                        checked={checked}
                     />
 
                     <button >Submit</button>
