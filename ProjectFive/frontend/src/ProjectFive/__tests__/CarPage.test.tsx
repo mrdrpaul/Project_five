@@ -20,6 +20,7 @@ describe('Car Page', () => {
         expect(carList).toBeVisible();
 
         expect(mockFetchCar).toHaveBeenCalledOnce();
+        screen.logTestingPlaygroundURL();
     })
 
     it('Should display a Make, Model, year, price, isUsed Input Boxes', async() => {
@@ -36,6 +37,22 @@ describe('Car Page', () => {
         expect(yearInputBox).toBeVisible()
         expect(isUsed).toBeVisible()
         expect(submitButton).toBeVisible()
+
+    });
+    it('should delete Car off List', async () => {
+        const expectedCar: Car[] = [
+            {id: 1, make: "Ford", model: "Mustang", year: 2017, price: 2043.33, used: true},
+            {id: 2, make: "Toyota", model: "Corolla", year: 2014, price: 204.33, used: false},
+        ]
+        const mockFetchCars = vi.spyOn(CarService, "fetchCars")
+            .mockResolvedValue(expectedCar);
+
+        render(<CarPage/>)
+
+        const carList = await screen.findByRole("heading", {name: "Ford Mustang"})
+
+        screen.logTestingPlaygroundURL();
+
 
     });
 })

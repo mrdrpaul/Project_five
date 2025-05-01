@@ -55,24 +55,14 @@ public class CarServiceTest {
     }
     @Test
     void shouldDeleteCar(){
-            // Arrange
             Mockito.when(carRepository.existsById(1L)).thenReturn(true);
-
-            // Act
             carService.deleteInventoryById(1L);
-
-            // Assert
             verify(carRepository, times(1)).deleteById(1L);
         }
     @Test
     void shouldThrowIfCarNotFound() {
-        // Arrange
         Mockito.when(carRepository.existsById(3L)).thenReturn(false);
-
-        // Act + Assert
         assertThrows(EntityNotFoundException.class, () -> carService.deleteInventoryById(3L));
-
-        // Verify deleteById was **not** called
         verify(carRepository, never()).deleteById(anyLong());
     }
 }

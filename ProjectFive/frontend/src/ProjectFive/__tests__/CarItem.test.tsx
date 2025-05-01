@@ -3,6 +3,7 @@ import {describe, it, expect} from "vitest";
 import {CarItem} from "../CarItem";
 import {Car} from "../../CarType";
 
+
 describe('Car Item',()=>{
     it('should display car make', () => {
         const testCar:Car = {
@@ -28,5 +29,21 @@ describe('Car Item',()=>{
         expect(isUsedDisplay).toBeChecked()
         expect(isUsedDisplay).toBeDisabled()
     });
+
+    it('should display delete button', () => {
+        const testCar:Car = {
+            id:null,
+            make:"Ford",
+            model:"Mustang",
+            year:2017,
+            price:20000.95,
+            used:true
+        }
+        render(<CarItem car={testCar}/>)
+        const deleteButton= screen.getByText("Delete")
+
+        expect(deleteButton).toBeVisible()
+    });
+
 
 })
