@@ -28,8 +28,9 @@ public class CarServiceTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         car1 = new CarEntity("Ford", "Focus", 2011, 3000.45, true);
-        car2 = new CarEntity("Toyota", "Carrolla", 1940, 34.33, true);
+        car2 = new CarEntity("Toyota", "Corolla", 1940, 34.33, true);
         expectedCars = List.of(car1, car2);
+        car1.setId(1L);
 
     }
 
@@ -49,5 +50,12 @@ public class CarServiceTest {
         verify(carRepository, times(1)).save(any(CarEntity.class));
         assert(savedCar.equals(MockCar));
 
+    }
+    @Test
+    void shouldDeleteCar(){
+        Mockito.when(carRepository.existsById(1L)).thenReturn(true);
+        String response= carService.deleteInventoryById(1L);
+        String responseNotFound= carService.deleteInventoryById(2L);
+        verify(carRepository, times(1)).deleteById(any());
     }
 }
