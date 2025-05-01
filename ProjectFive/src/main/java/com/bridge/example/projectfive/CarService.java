@@ -4,6 +4,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+
 @Service
 public class CarService {
 
@@ -19,5 +20,13 @@ public class CarService {
 
     public CarEntity SaveCar(CarEntity mockCar) {
         return carRepository.save(mockCar);
+    }
+
+    public String deleteInventoryById(Long id) {
+        if (carRepository.existsById(id)) {
+            carRepository.deleteById(id);
+            return "Item deleted.";
+        }
+        return "Item not found.";
     }
 }

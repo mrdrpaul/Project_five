@@ -56,6 +56,8 @@ public class CarServiceTest {
         Mockito.when(carRepository.existsById(1L)).thenReturn(true);
         String response= carService.deleteInventoryById(1L);
         String responseNotFound= carService.deleteInventoryById(2L);
-        verify(carRepository, times(1)).deleteById(any());
+        verify(carRepository, times(1)).deleteById(any(Long.class));
+        assert(response).equals("Item deleted.");
+        assert(responseNotFound).equals("Item not found.");
     }
 }

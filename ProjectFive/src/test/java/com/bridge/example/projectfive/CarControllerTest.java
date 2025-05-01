@@ -53,4 +53,8 @@ public class CarControllerTest {
                 .content(objectMapper.writeValueAsString(carEntity))).andExpect(status().isCreated());
 
     }
+    @Test
+    void shouldDeleteCarById(){
+
+    }
 }
