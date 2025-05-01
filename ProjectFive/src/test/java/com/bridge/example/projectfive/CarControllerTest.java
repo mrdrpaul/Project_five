@@ -12,11 +12,14 @@ import org.springframework.test.context.bean.override.mockito.MockitoBean;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
+
 import java.util.List;
 
 import static org.hamcrest.Matchers.hasSize;
+import static org.mockito.ArgumentMatchers.anyLong;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.mockito.Mockito.doNothing;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -31,12 +34,16 @@ public class CarControllerTest {
     private CarService carService;
 
     CarEntity carEntity = new CarEntity("Ford", "Mustang", 2019, 25000.69, true);
-    CarEntity carEntity1 = new CarEntity("Chevy","Silverado",2025,75000.87,false);
+    CarEntity carEntity1 = new CarEntity("Chevy", "Silverado", 2025, 75000.87, false);
+    CarEntity deleteCar = new CarEntity("Toyota", "Corolla", 2014, 6900.00, true);
     List<CarEntity> carList;
+
     @BeforeEach
     void setUp() {
-        carList=List.of(carEntity,carEntity1);
+        carList = List.of(carEntity, carEntity1);
         Mockito.when(carService.findAllCars()).thenReturn(carList);
+        deleteCar.setId(1L);
+        doNothing().when(carService).deleteInventoryById(1L);
     }
 
     @Test
@@ -47,14 +54,18 @@ public class CarControllerTest {
     }
 
     @Test
-    void shouldCreateACar() throws Exception{
+    void shouldCreateACar() throws Exception {
         Mockito.when(carService.SaveCar(carEntity)).thenReturn(carEntity);
         mockMvc.perform(MockMvcRequestBuilders.post("/api/car/create").contentType(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsString(carEntity))).andExpect(status().isCreated());
 
     }
+
     @Test
-    void shouldDeleteCarById(){
+    void shouldDeleteCarById() throws Exception {
+        doNothing().when(carService).deleteInventoryById(anyLong());
+        mockMvc.perform(MockMvcRequestBuilders.delete("/api/car/1"))
+                .andExpect(status().isNoContent());
 
     }
 }

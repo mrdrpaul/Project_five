@@ -1,5 +1,6 @@
 package com.bridge.example.projectfive;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -22,11 +23,11 @@ public class CarService {
         return carRepository.save(mockCar);
     }
 
-    public String deleteInventoryById(Long id) {
+    public void deleteInventoryById(Long id) {
         if (carRepository.existsById(id)) {
             carRepository.deleteById(id);
-            return "Item deleted.";
+        } else {
+            throw new EntityNotFoundException("Item not found.");
         }
-        return "Item not found.";
     }
 }

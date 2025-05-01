@@ -1,5 +1,6 @@
 package com.bridge.example.projectfive;
 
+import jakarta.persistence.EntityNotFoundException;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -10,6 +11,7 @@ import org.mockito.MockitoAnnotations;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 public class CarServiceTest {
@@ -53,11 +55,24 @@ public class CarServiceTest {
     }
     @Test
     void shouldDeleteCar(){
-        Mockito.when(carRepository.existsById(1L)).thenReturn(true);
-        String response= carService.deleteInventoryById(1L);
-        String responseNotFound= carService.deleteInventoryById(2L);
-        verify(carRepository, times(1)).deleteById(any(Long.class));
-        assert(response).equals("Item deleted.");
-        assert(responseNotFound).equals("Item not found.");
+            // Arrange
+            Mockito.when(carRepository.existsById(1L)).thenReturn(true);
+
+            // Act
+            carService.deleteInventoryById(1L);
+
+            // Assert
+            verify(carRepository, times(1)).deleteById(1L);
+        }
+    @Test
+    void shouldThrowIfCarNotFound() {
+        // Arrange
+        Mockito.when(carRepository.existsById(3L)).thenReturn(false);
+
+        // Act + Assert
+        assertThrows(EntityNotFoundException.class, () -> carService.deleteInventoryById(3L));
+
+        // Verify deleteById was **not** called
+        verify(carRepository, never()).deleteById(anyLong());
     }
 }

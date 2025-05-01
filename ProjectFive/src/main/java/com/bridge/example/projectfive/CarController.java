@@ -27,4 +27,9 @@ public class CarController {
         carService.SaveCar(newCar);
         return ResponseEntity.status(201).body(newCar);
     }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteCar(@PathVariable Long id){
+        carService.deleteInventoryById(id);
+    }
 }
